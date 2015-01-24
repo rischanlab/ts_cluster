@@ -16,3 +16,20 @@ View(ts)
 Ddtw <- dtwDist(ts[,-(numcols+1)],method="DTW")
 write.table(as.matrix(Ddtw),"Ddtw.txt", quote=FALSE, sep=" ", row.names=FALSE,col.names = FALSE)
 
+Dcormat <- abs(cor(t(as.matrix(ts[, -(numcols +1)]))))
+library(MASS)
+library(fpc)
+MDSDdtw <- isoMDS(Ddtw, k=3)$points
+dbscanDTW <- dbscan(MDSDdtw, eps = 100, MinPts = 5, method = "raw")
+
+classcolors <- ts[, numcols +1]
+par(mfrow = c(1, 2))
+plot(MDSDdtw[, 1], MDSDdtw[, 2], xlab = "First Dimension  Actual Classes", ylab = "Second Dimension", 
+     type = "n")
+points(MDSDdtw[, 1], MDSDdtw[, 2], pch = classcolors, col = classcolors)
+
+plot(MDSDdtw[, 1], MDSDdtw[, 2], xlab = "First Dimension  DBSCAN Clustering", 
+     ylab = "Second Dimension", col = 1 + dbscanDTW$cluster)
+
+
+
