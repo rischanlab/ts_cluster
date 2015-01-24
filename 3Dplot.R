@@ -1,5 +1,6 @@
 #install.packages("rgl")
 #install.packages("geometry")
+#http://clusteranalysiswithr.blogspot.kr/2014/05/clustering-series-2.html
 library(rgl)
 library(geometry)
 
